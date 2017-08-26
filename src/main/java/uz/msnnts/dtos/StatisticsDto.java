@@ -1,57 +1,61 @@
 package uz.msnnts.dtos;
 
+import java.math.BigDecimal;
+
 /**
  * Created by sirnornur on 26.08.17.
  */
 public class StatisticsDto {
 
-    private double sum;
+    private BigDecimal sum;
 
-    private double avg;
+    private BigDecimal avg = null;
 
-    private double max;
+    private BigDecimal max;
 
-    private double min;
+    private BigDecimal min;
 
     private int count;
 
-    public StatisticsDto(double amount, int tCount, double minimum, double maximum) {
+    public StatisticsDto(BigDecimal amount, int tCount, BigDecimal minimum, BigDecimal maximum) {
         this.sum = amount;
         this.count = tCount;
-        this.avg = this.sum / this.count;
+        if (this.count > 0) {
+            this.avg = this.sum.divide(BigDecimal.valueOf(this.count), BigDecimal.ROUND_HALF_UP);
+        }
         this.min = minimum;
         this.max = maximum;
     }
 
-    public double getSum() {
+    public BigDecimal getSum() {
         return sum;
     }
 
-    public void setSum(double sum) {
+    public void setSum(BigDecimal sum) {
         this.sum = sum;
     }
 
-    public double getAvg() {
+    public BigDecimal getAvg() {
         return avg;
     }
 
-    public void setAvg(double avg) {
+    public void setAvg(BigDecimal avg) {
         this.avg = avg;
     }
 
-    public double getMax() {
+    public BigDecimal getMax() {
         return max;
     }
 
-    public void setMax(double max) {
+    public void setMax(BigDecimal max) {
         this.max = max;
     }
 
-    public double getMin() {
+    public BigDecimal getMin() {
         return min;
     }
 
-    public void setMin(double min) {
+    public void setMin(BigDecimal min) {
         this.min = min;
     }
 

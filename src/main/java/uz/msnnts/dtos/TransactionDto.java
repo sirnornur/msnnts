@@ -1,27 +1,29 @@
 package uz.msnnts.dtos;
 
+import java.math.BigDecimal;
+
 /**
  * Created by sirnornur on 26.08.17.
  */
 public class TransactionDto {
 
-    private long time;
+    private long timestamp;
 
-    private double amount;
+    private BigDecimal amount;
 
-    public long getTime() {
-        return time;
+    public long getTimestamp() {
+        return timestamp;
     }
 
-    public void setTime(long time) {
-        this.time = time;
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 }

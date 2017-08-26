@@ -21,10 +21,10 @@ public class MainController {
     private final ResponseEntity reCreated = new ResponseEntity(HttpStatus.CREATED);
     private final ResponseEntity reNoContent = new ResponseEntity(HttpStatus.NO_CONTENT);
 
-    @RequestMapping(value = "/transactions",method = RequestMethod.POST)
+    @RequestMapping(value = "/transactions", method = RequestMethod.POST, consumes = {"application/json"})
     public ResponseEntity accountTransaction(@RequestBody TransactionDto transaction) {
 
-        if (statisticsService.nextData(transaction.getTime(), transaction.getAmount())) {
+        if (statisticsService.nextData(transaction.getTimestamp(), transaction.getAmount())) {
             return reCreated;
         } else {
             return reNoContent;

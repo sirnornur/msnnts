@@ -1,11 +1,13 @@
 package uz.msnnts.dtos;
 
+import java.math.BigDecimal;
+
 /**
  * Created by sirnornur on 26.08.17.
  */
 public class TimeSlotDto {
     private long count = 0;
-    private double amount = 0;
+    private BigDecimal amount = BigDecimal.ZERO;
 
     public long getCount() {
         return count;
@@ -15,16 +17,16 @@ public class TimeSlotDto {
         this.count = count;
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
-    public void addSum(double amount) {
-        this.amount += amount;
+    public void addAmount(BigDecimal amount) {
+        this.amount = this.amount.add(amount);
     }
 
     public void addCount() {

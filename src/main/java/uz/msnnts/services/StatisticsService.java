@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import uz.msnnts.dtos.StatisticsDto;
 import uz.msnnts.dtos.TimeSlotDto;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -16,12 +17,13 @@ public class StatisticsService {
     private TimeSlotDto[] statDeque = new TimeSlotDto[62];
     private int endIdx = 59;
     private int totalCount;
-    private double totalAmount;
+    private BigDecimal totalAmount;
 
-    private Object mutex = new Object();
+//    private Object mutex = new Object();
     private ResponseEntity<StatisticsDto> statistics;
 
     public StatisticsService() {
+        totalAmount = BigDecimal.ZERO;
         for (int i = 0; i < 60; i++) {
             statDeque[i] = new TimeSlotDto();
         }
@@ -31,10 +33,10 @@ public class StatisticsService {
     public synchronized void nextSecond() {
         endIdx++;
         if (endIdx == 60) endIdx = 0;
-        totalAmount -= statDeque[endIdx].getAmount();
+        totalAmount = totalAmount.subtract(statDeque[endIdx].getAmount());
         totalCount -= statDeque[endIdx].getCount();
         statDeque[endIdx].setCount(0);
-        statDeque[endIdx].setAmount(0);
+        statDeque[endIdx].setAmount(BigDecimal.ZERO);
         System.out.println("endIdx=" + endIdx);
     }
 
@@ -44,16 +46,16 @@ public class StatisticsService {
         return curIdx;
     }
 
-    public boolean nextData(long time, double amount) {
+    public boolean nextData(long time, BigDecimal amount) {
         long difference = new Date().getTime() - time;
         if (difference < 60000) {
             int second = (int) difference / 1000;
 
             synchronized (this) {
                 int curIdx = getCurrentIndexOfSecond(second);
-                statDeque[curIdx].addSum(amount);
+                statDeque[curIdx].addAmount(amount);
                 statDeque[curIdx].addCount();
-                totalAmount += amount;
+                totalAmount = totalAmount.add(amount);
                 totalCount++;
             }
 
@@ -65,6 +67,6 @@ public class StatisticsService {
 
 
     public synchronized StatisticsDto getStatistics() {
-        return new StatisticsDto(totalAmount, totalCount, 0, 0);
+        return new StatisticsDto(totalAmount, totalCount, BigDecimal.ZERO, BigDecimal.ZERO);
     }
 }

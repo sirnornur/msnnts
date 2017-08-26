@@ -16,6 +16,8 @@ Additional requirement: endpoints should run in constant time and memory (O(1)).
 
 The provided solution endpoints work in constant O(1) time. The whole service requires constant memory (required memory amount is fixed and does not increase as the transactions increase). The solutions statistics accuracy is about a second. 
 
+As we do not have to account for anything besides 5 kinds of statistics for the last 60 seconds, this solution uses in-memory database only (thread safe circular buffer).
+
 I used the circular buffer data structure for this task (own implementation) for the following advantages:<br/>
  - Getting element by index requires constant time - data is stored in simple java array of fixed length.
  - Appending an element in the front requires constant time, no objects moved, no iterations. Just the zero index marker is moved to the right one step.

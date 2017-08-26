@@ -14,6 +14,10 @@ public class ScheduledTasks {
     @Autowired
     private StatisticsService statisticsService;
 
+    /**
+     * Scheduled task, we need to do some calculations every second
+     * Because some of the statistical data expires every second
+     */
     @Scheduled(cron = "* * * * * *")
     public void runEverySecond(){
         statisticsService.nextSecond();

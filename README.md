@@ -14,7 +14,7 @@ The service should monitor and collect the following statistics for the last 60 
 
 Additional requirement: endpoints should run in constant time and memory (O(1)).
 
-The provided solution endpoints work in constant O(1) time. The whole service requires constant memory (required memory amount is fixed and does not increase as the transactions increase). 
+The provided solution endpoints work in constant O(1) time. The whole service requires constant memory (required memory amount is fixed and does not increase as the transactions increase). The solutions statistics accuracy is about a second. 
 
 I used the circular buffer data structure for this task (own implementation) for the following advantages:<br/>
  - Getting element by index requires constant time - data is stored in simple java array of fixed length.
@@ -32,6 +32,10 @@ Every statistics object of every seconds contains the following:
  - total amount of transactions for this second
  - total number of transactions for this second 
  
+There is a scheduled task that runs in another thread every second. Its responsibility is:
+ - Remove the data of the 61st seconds statistics from the circular buffer and initialize an empty statistics object for the new second.
+ - If the minimum/maximum transaction amounts are expired (belong to the 61st second), find another minimum and maximums.
+
 Please, check the sources out for more details.
 
 Because of the limited time, I added only two unit test methods.

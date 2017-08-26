@@ -71,7 +71,7 @@ public class StatisticsService {
         //Subtract the 61th seconds transactions count from the total transactions count
         totalCount -= statDeque[endIdx].getCount();
 
-        //If the global maximum equals to the 61s seconds minimum:
+        //If the global maximum equals to the 61st seconds minimum:
         if (isAEqualsToB(overallMaximum, statDeque[endIdx].getMaximum())) {
             //Then this maximum has expired
             overallMaximum = null;
@@ -84,7 +84,7 @@ public class StatisticsService {
                 }
             }
         }
-        //If the global maximum equals to the 61s seconds minimum:
+        //If the global maximum equals to the 61st seconds minimum:
         if (isAEqualsToB(overallMinimum, statDeque[endIdx].getMinimum())) {
             //Then this minimum has expired
             overallMinimum = null;

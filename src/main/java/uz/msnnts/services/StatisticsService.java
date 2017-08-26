@@ -98,61 +98,11 @@ public class StatisticsService {
             }
         }
 
+        //Set new second's statistics to initial values
         statDeque[endIdx].setCount(0);
         statDeque[endIdx].setAmount(BigDecimal.ZERO);
         statDeque[endIdx].setMinimum(noLocalMinimum);
         statDeque[endIdx].setMaximum(noLocalMaximum);
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("max:");
-        int currentIndexOfSecond = getCurrentIndexOfSecond(0);
-        for (int i = 0; i < 30; i++) {
-            currentIndexOfSecond--;
-            if (currentIndexOfSecond == -1) currentIndexOfSecond = 59;
-            sb.append(nullOrVal(statDeque[currentIndexOfSecond].getMaximum()));
-            sb.append(',');
-        }
-        sb.append("\n");
-
-        sb.append("min:");
-        currentIndexOfSecond = getCurrentIndexOfSecond(0);
-        for (int i = 0; i < 30; i++) {
-            currentIndexOfSecond--;
-            if (currentIndexOfSecond == -1) currentIndexOfSecond = 59;
-            sb.append(nullOrVal(statDeque[currentIndexOfSecond].getMinimum()));
-            sb.append(',');
-        }
-        sb.append("\n");
-        sb.append("amt:");
-        currentIndexOfSecond = getCurrentIndexOfSecond(0);
-        for (int i = 0; i < 30; i++) {
-            currentIndexOfSecond--;
-            if (currentIndexOfSecond == -1) currentIndexOfSecond = 59;
-            sb.append(nullOrVal(statDeque[currentIndexOfSecond].getAmount()));
-            sb.append(',');
-        }
-        sb.append("\n");
-
-        sb.append("cnt:");
-        currentIndexOfSecond = getCurrentIndexOfSecond(0);
-        for (int i = 0; i < 30; i++) {
-            currentIndexOfSecond--;
-            if (currentIndexOfSecond == -1) currentIndexOfSecond = 59;
-            sb.append(String.format("%6d", statDeque[currentIndexOfSecond].getCount()));
-            sb.append(',');
-        }
-        sb.append("\nLocal Min:");
-        sb.append(nullOrVal(overallMinimum));
-        sb.append("\nLocal Max:");
-        sb.append(nullOrVal(overallMaximum));
-        sb.append("\n********************************\n");
-
-        System.out.println(sb.toString());
-    }
-
-    private String nullOrVal(BigDecimal decimal) {
-        if (decimal == null) return "     -";
-        else return String.format("%6.1f", decimal);
     }
 
     /**
